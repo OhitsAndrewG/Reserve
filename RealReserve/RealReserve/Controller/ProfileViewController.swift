@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import PhotosUI
 
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
@@ -17,6 +18,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var confirmUsernameUIButton: UIButton!
     @IBOutlet weak var logoutUIButton: UIButton!
     @IBOutlet weak var scheduleUITableView: UITableView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,6 +97,23 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     
+    @IBAction func addImageUIButton(_ sender: Any) {
+        
+        self.openGallery()
+        
+    }
+    
+    func openGallery(){
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            let image = UIImagePickerController()
+            image.allowsEditing = true;
+            image.delegate = self
+            self.present(image, animated: true, completion: nil)
+            
+        }
+    }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -106,4 +125,33 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
 
+}
+
+/*
+ SOURCE: https://www.youtube.com/watch?v=ohXRZPKSwG0
+ */
+extension ProfileViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let pickedImage = info[UIImagePickerController.InfoKey(rawValue: self.convertInfoKey(UIImagePickerController.InfoKey.editedImage))] as? UIImage{
+            print(pickedImage)
+            self.profileImage.image = pickedImage
+        }
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func uiImageToDictionary(_ input:[UIImagePickerController.InfoKey: Any])-> [String:Any]{
+        
+        return Dictionary(uniqueKeysWithValues: input.map({key, value in (key.rawValue, value)}))
+    }
+    
+    func  convertInfoKey(_ input: UIImagePickerController.InfoKey) ->String{
+        return input.rawValue
+    }
+    
 }
