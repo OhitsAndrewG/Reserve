@@ -11,7 +11,7 @@
         - FS Calender - clender portion ---> DONE
     IOS API KITS
         - MapKit --->DONE
-        - ImageKit - user profile --->
+        - PhotoKit --->DONE
     
  */
 

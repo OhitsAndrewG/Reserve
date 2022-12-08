@@ -28,7 +28,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width/2
         self.profileImage.clipsToBounds=true
         self.usernameUITextField.delegate = self
-
+        
     }
     
     

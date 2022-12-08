@@ -23,7 +23,9 @@ class DatabaseUser{
     var reserve = [String]()
     var locations = [String]()
     
+    
     public static let shares = DatabaseUser()
+    public static var profileimages = [String : UIImage]()
     
     //DONE
     func setCurrentUserData(uid:String, email:String){
@@ -35,6 +37,7 @@ class DatabaseUser{
                 print("Data Up to Date")
             }
         }
+        DatabaseUser.profileimages[email] = UIImage(named: "image")
     }
     
     func setUserName(userName:String){
@@ -127,8 +130,6 @@ class DatabaseUser{
     
     //This this Updates data to the Data base/ not gets data from data base
     public func updateClientDatabase(){
-//        self.reservedDates = [:]
-//        self.username = ""
         let db = Firestore.firestore()
         db.collection("Users").document(self.uid!).setData(
             [
@@ -137,11 +138,8 @@ class DatabaseUser{
             "ReservedDates": self.reservedDates
         ]){ error in
             if(error == nil){
-                //no error
                 print("Successfully Updated Database For: \(self.uid!)")
-//                self.refreshClientDataFromDatabase();
             }else{
-                //error Occurred
                 print("Not Updated to Database")
             }
 
