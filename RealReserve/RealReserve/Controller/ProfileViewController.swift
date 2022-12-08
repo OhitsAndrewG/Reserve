@@ -10,7 +10,7 @@ import Firebase
 import PhotosUI
 
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate{
 
     @IBOutlet weak var addImageUIButton: UIButton!
     @IBOutlet weak var profileImage: UIImageView!
@@ -26,8 +26,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         self.scheduleUITableView.reloadData()
         //------VISUAL----------------------------------------------//
         self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width/2
-        self.profileImage.clipsToBounds=true;
-
+        self.profileImage.clipsToBounds=true
+        self.usernameUITextField.delegate = self
 
     }
     
@@ -123,6 +123,17 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 self.scheduleUITableView.reloadData()
             }
         }
+    }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+        self.view.endEditing(true)
+    }
+    
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.usernameUITextField.resignFirstResponder()
+        return true
     }
 
 }

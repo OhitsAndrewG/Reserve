@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 
-class SignUpViewController: UIViewController{
+class SignUpViewController: UIViewController, UITextFieldDelegate{
 
 
     @IBOutlet weak var emailUITextField: UITextField!
@@ -19,7 +19,9 @@ class SignUpViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.emailUITextField.delegate = self
+        self.passwordUITextField.delegate = self
+        self.confirmPasswordUITextField.delegate = self
         // Do any additional setup after loading the view.
     }
 
@@ -51,6 +53,19 @@ class SignUpViewController: UIViewController{
             self.confirmPasswordUITextField.text = nil;
         }))
         present(alert, animated: true)
+    }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+        self.view.endEditing(true)
+    }
+    
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.emailUITextField.resignFirstResponder()
+        self.passwordUITextField.resignFirstResponder()
+        self.confirmPasswordUITextField.resignFirstResponder()
+        return true
     }
 
 }
